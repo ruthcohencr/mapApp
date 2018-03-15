@@ -18,3 +18,18 @@
     </ng-container>
   </table>
 </div>
+
+<div class="container">
+  <table class="table">
+    <tr>
+      <th>שם הרשת</th>
+      <th>שם הסניף</th>
+      <th>מרחק בק"מ</th>
+    </tr>
+    <tr *ngFor="let branch of sortedMarkets">
+      <td>{{ branch.networkName }}</td>
+      <td>{{ branch.branchName }}</td>
+      <td>{{ branch.distance}}</td>
+    </tr>
+  </table>
+</div>

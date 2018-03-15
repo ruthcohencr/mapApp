@@ -9,6 +9,8 @@ import { Market } from '../../Models/market.model';
 export class ListBranchesComponent implements OnInit {
 
   @Input() markets: Market[];
+  @Input() sortedMarkets;
+
   constructor() { }
 
   ngOnInit() {
