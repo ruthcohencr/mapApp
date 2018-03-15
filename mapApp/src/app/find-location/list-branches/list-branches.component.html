@@ -1,3 +1,20 @@
 <h2>
-  listBranches
+  רשתות המזון
 </h2>
+
+<div class="container">
+  <table class="table">
+    <tr>
+      <th>שם הרשת</th>
+      <th>שם הסניף</th>
+      <th>מרחק בק"מ</th>
+    </tr>
+    <ng-container *ngFor="let market of markets; let i=index">
+      <tr *ngFor="let branch of market.branches; let j=index">
+        <td>{{ market.networkName }}</td>
+        <td>{{ branch.name }}</td>
+        <td> 45 </td>
+      </tr>
+    </ng-container>
+  </table>
+</div>

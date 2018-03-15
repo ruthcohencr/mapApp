@@ -1,0 +1,9 @@
+td,th{
+    text-align: right;
+    border: 1px solid #dddddd;
+    padding: 8px;
+}
+
+tr:nth-child(even){
+    background-color: #dddddd;
+}

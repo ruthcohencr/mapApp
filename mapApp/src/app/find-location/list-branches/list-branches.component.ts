@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Market } from '../../Models/market.model';
 
 @Component({
   selector: 'app-list-branches',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListBranchesComponent implements OnInit {
 
+  @Input() markets: Market[];
   constructor() { }
 
   ngOnInit() {

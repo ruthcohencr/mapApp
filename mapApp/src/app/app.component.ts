@@ -3,9 +3,6 @@ import { Market } from './Models/market.model';
 
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import './googleMap.js';
-
-declare var webGlObject: any;
 
 @Component({
   selector: 'app-root',
@@ -13,16 +10,16 @@ declare var webGlObject: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
+
   markets: Market[];
-  
-  constructor(private http: Http){
-    var json = this.http.get('assets/market.json');
-    console.log(json);
+  results;
+
+  constructor(private http: Http) {
+    // this.http.get('assets/markets.json').subscribe(data => {this.results = data;});
+    // var json = require('../assets/markets.json');
+    // console.log(json);
   }
   //var json = Utilities.JSONLoader.loadFromFile("../docs/location_map.json");
 
-  onClick(){
-    webGlObject.init();
-  }
+
 }

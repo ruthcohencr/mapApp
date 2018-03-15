@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { AgmCoreModule } from '@agm/core';
 import { Ng4GeoautocompleteModule } from 'ng4-geoautocomplete';
 import { AgmCoreModule } from '@agm/core';
@@ -15,10 +15,12 @@ import { HttpModule } from '@angular/http';
   declarations: [
     AppComponent,
     FindLocationComponent,
-    ListBranchesComponent
+    ListBranchesComponent,
+    
   ],
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     HttpModule,
     // Ng4GeoautocompleteModule.forRoot()
