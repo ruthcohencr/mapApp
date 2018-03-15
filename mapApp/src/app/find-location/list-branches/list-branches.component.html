@@ -1,24 +1,13 @@
-<h2>
-  רשתות המזון
-</h2>
+<div class="hweaderOfTable">
 
-<div class="container">
-  <table class="table">
-    <tr>
-      <th>שם הרשת</th>
-      <th>שם הסניף</th>
-      <th>מרחק בק"מ</th>
-    </tr>
-    <ng-container *ngFor="let market of markets; let i=index">
-      <tr *ngFor="let branch of market.branches; let j=index">
-        <td>{{ market.networkName }}</td>
-        <td>{{ branch.name }}</td>
-        <td> 45 </td>
-      </tr>
-    </ng-container>
-  </table>
+  <h2>
+    <p>רשתות המזון </p>
+    <p id="selectedMarket">{{selectedMarket}}</p>
+  </h2>
+
 </div>
 
+
 <div class="container">
   <table class="table">
     <tr>
@@ -26,10 +15,13 @@
       <th>שם הסניף</th>
       <th>מרחק בק"מ</th>
     </tr>
-    <tr *ngFor="let branch of sortedMarkets">
-      <td>{{ branch.networkName }}</td>
-      <td>{{ branch.branchName }}</td>
-      <td>{{ branch.distance}}</td>
-    </tr>
+
+    <ng-container *ngIf="sortedMarkets != null">
+      <tr *ngFor="let branch of sortedMarkets">
+        <td>{{ branch.networkName }}</td>
+        <td>{{ branch.branchName }}</td>
+        <td>{{ branch.distance}}</td>
+      </tr>
+    </ng-container>
   </table>
 </div>

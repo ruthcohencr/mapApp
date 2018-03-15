@@ -1,14 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
-//import googlePlacesService from 'google-places-autocomplete-service';
 import { } from '@types/googlemaps';
-//import { Ng4GeoautocompleteModule } from 'ng4-geoautocomplete';
-//import { AgmCoreModule } from '@agm/core';
 import { MapsAPILoader } from '@agm/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Market } from '../Models/market.model';
 import { MARKETS } from '../Models/mock.markets';
-import 'rxjs/add/operator/first';
+
 
 @Component({
   selector: 'app-find-location',
@@ -27,6 +24,14 @@ export class FindLocationComponent implements OnInit {
   // }];
   sortedMarkets = [];
 
+  // bestInRange: [{
+  //   "name": string,
+  //   "count": number
+  // }];
+
+  bestInRange = [];
+
+  mostBranchesMarket: string;
   // user input address
   searchInput: string;
 
@@ -47,7 +52,6 @@ export class FindLocationComponent implements OnInit {
     //mock data
     this.markets = MARKETS;
     console.log(this.markets);
-
   }
 
   ngOnInit() {
@@ -95,22 +99,26 @@ export class FindLocationComponent implements OnInit {
     }
   }
 
-  submitAddress() {
+  submitAddress(inputText) {
     console.log("inputAddress " + this.inputAddress);
-    this.getGeoLocation(this.inputAddress)
-      .subscribe(res => {
-        this.selectedLatitude = res.lat();
-        this.selectedLongitude = res.lng();
-        console.log("lat,long " + this.selectedLatitude + " " + " " + this.selectedLongitude);
-        var calculateDistanceArray = this.calculateDistance();
-        //  console.log("calculateDistanceArray " + calculateDistanceArray);
-        this.sortedMarkets = calculateDistanceArray.sort(function (a, b) {
-          return a.distance - b.distance;
-          //  console.log("sorted Array " + this.sortedMarkets);
+   // debugger;
+    if (inputText != "") {
+      this.getGeoLocation(this.inputAddress)
+        .subscribe(res => {
+          this.selectedLatitude = res.lat();
+          this.selectedLongitude = res.lng();
+          console.log("lat,long " + this.selectedLatitude + " " + " " + this.selectedLongitude);
+         // debugger;
+          var calculateDistanceArray = this.calculateDistance();
+          // find most amount network market in range
+          this.mostBranchesMarket = this.getBestMarket();
+          //  console.log("calculateDistanceArray " + calculateDistanceArray);
+          this.sortedMarkets = calculateDistanceArray.sort(function (a, b) {
+            return a.distance - b.distance;
+            //  console.log("sorted Array " + this.sortedMarkets);
+          });
         });
-      });
-    // calculate km range between desired place to each superMarket
-    // debugger;
+    }
   }
 
   // using this method to get the latitude & longitude 
@@ -135,7 +143,24 @@ export class FindLocationComponent implements OnInit {
     })
   }
 
+  // itatate the array that has all the markets names and 
+  // counter for each - who many brances in 50 km range
+  getBestMarket(): string {
+    let index = 0;
+    let count = 0;
+    for (let i = 0; i < this.bestInRange.length; i++) {
+      let currentCount = this.bestInRange[i].count;
+      if (currentCount > count) {
+        count = currentCount;
+        index = i
+      }
+    }
+    return this.bestInRange[index].name;
+  }
+
   calculateDistance() {
+    // set the array to empty after last itarate
+    this.bestInRange = [];
     var calculateArray = [];
     for (let i = 0; i < this.markets.length; i++) {
       for (let j = 0; j < this.markets[i].branches.length; j++) {
@@ -147,10 +172,10 @@ export class FindLocationComponent implements OnInit {
             this.selectedLatitude, this.selectedLongitude)
         };
         calculateArray.push(element);
+        // for bonus part - less than 50 km & most branches amount
+        this.updateBestInRangeArray(element);
       }
     }
-
-
     return calculateArray;
   }
 
@@ -158,6 +183,25 @@ export class FindLocationComponent implements OnInit {
     this.inputAddress = value;
   }
 
+  updateBestInRangeArray(branch) {
+    if (branch.distance <= 50) {
+      // let index = this.bestInRange.indexOf(branch.networkName);
+      //debugger;
+      if (this.bestInRange != null) {
+        let index = this.bestInRange.findIndex(x => x.name == branch.networkName);
+        if (index == -1) {
+          this.bestInRange.push({ name: branch.networkName, count: 1 })
+        }
+        else {
+          this.bestInRange[index].count += 1;
+        }
+      }
+      else{
+        this.bestInRange.push({ name: branch.branchName, count: 1 });
+      }
+    }
+
+  }
 
   getDistance(lat1, lon1, lat2, lon2) {
     var p = 0.017453292519943295;    // Math.PI / 180

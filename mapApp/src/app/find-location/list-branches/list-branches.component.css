@@ -7,3 +7,28 @@ td,th{
 tr:nth-child(even){
     background-color: #dddddd;
 }
+
+.headerOfTable{
+    display: flex;
+    align-items: stretch;
+
+}
+
+h2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+#selectedMarket{  
+    color: white;
+    background-color: rgb(195, 0, 47);
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+p{
+    padding-left: 10px;
+    padding-right: 10px;
+}

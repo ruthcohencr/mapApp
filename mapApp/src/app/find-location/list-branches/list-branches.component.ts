@@ -8,8 +8,9 @@ import { Market } from '../../Models/market.model';
 })
 export class ListBranchesComponent implements OnInit {
 
-  @Input() markets: Market[];
-  @Input() sortedMarkets;
+ // @Input() markets: Market[];
+  @Input() sortedMarkets = null;
+  @Input() selectedMarket;
 
   constructor() { }
 

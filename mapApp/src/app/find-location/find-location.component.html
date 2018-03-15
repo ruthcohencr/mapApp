@@ -1,25 +1,16 @@
-
-   {{ inputAddress }}
 <div class="container">
   <form>
     <div class="form-group">
       <label for="search">המיקום שלי</label>
-      <input placeholder="רשום כתובת" autocorrect="off" [(ngModel)]="inputAddress"
-        autocapitalize="off" spellcheck="off" type="text" name="search" class="form-control"
-        #search [formControl]="searchControl" (keyup)="onKeyupFromSearch(search.value)">
+      <input placeholder="רשום כתובת" autocorrect="off" [(ngModel)]="inputAddress" autocapitalize="off" spellcheck="off" type="text"
+        name="search" class="form-control" #search [formControl]="searchControl" (keyup)="onKeyupFromSearch(search.value)">
     </div>
- 
+
     <div>
-      <button class="btn btn-primary" type="submit" (click)="submitAddress()">שלח</button>
+      <button class="btn btn-primary" type="submit" (click)="submitAddress(search.value)">שלח</button>
     </div>
+
   </form>
 </div>
 
-<div class="container">
-  <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-  </agm-map>
-</div>
-
-
-<app-list-branches [markets]="markets" [sortedMarkets]="sortedMarkets"></app-list-branches>
+<app-list-branches [sortedMarkets]="sortedMarkets" [selectedMarket]="mostBranchesMarket"></app-list-branches>
